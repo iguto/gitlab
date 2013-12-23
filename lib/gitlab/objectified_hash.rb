@@ -11,8 +11,9 @@ module Gitlab
     end
 
     # Delegate to ObjectifiedHash
-    def method_missing(key)
-      @data.key?(key.to_s) ? @data[key.to_s] : nil
+    def method_missing(*args)
+      return @data[args.first.to_s] if @data.key?(args.first.to_s)
+      @data.__send__(*args)
     end
   end
 end
